@@ -11,7 +11,10 @@ resource "random_pet" "petname" {
 resource "aws_s3_bucket" "demo" {
   bucket = "${var.prefix}-${random_pet.petname.id}"
   acl    = "public-read"
-
+  tags = {
+    Name        = "HashiCorp"
+    Environment = "Learn"
+  }
   policy = <<EOF
 {
     "Version": "2012-10-17",
