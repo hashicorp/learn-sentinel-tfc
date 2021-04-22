@@ -9,7 +9,9 @@ terraform {
       version = ">= 3.26.0"
     }
   }
-  required_version = "~> 0.14"
+
+  required_version = "~> 0.15"
+
   backend "remote" {
     organization = "YOUR_TERRAFORM_ORG"
     workspaces {
