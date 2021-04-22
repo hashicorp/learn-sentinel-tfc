@@ -1,3 +1,7 @@
-output "dev_website_endpoint" {
-  value = "http://${aws_s3_bucket.demo.website_endpoint}/index.html"
+output "instance_ami" {
+  value = aws_instance.ubuntu.ami
+}
+
+output "instance_arn" {
+  value = aws_instance.ubuntu.arn
 }
