@@ -13,7 +13,7 @@ terraform {
   required_version = "~> 0.15"
 
   backend "remote" {
-    organization = "hashicorp-learn"
+    organization = "<YOUR_TERRAFORM_ORG>"
 
     workspaces {
       name = "sentinel-example"
