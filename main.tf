@@ -9,65 +9,43 @@ terraform {
       version = ">= 3.26.0"
     }
   }
-  required_version = "~> 0.14"
+
+  required_version = "~> 0.15"
+
   backend "remote" {
     organization = "<YOUR_TERRAFORM_ORG>"
+
     workspaces {
       name = "sentinel-example"
     }
   }
 }
 
-
 provider "aws" {
   region = var.region
 }
 
+data "aws_ami" "ubuntu" {
+  most_recent = true
 
-resource "random_pet" "petname" {
-  length    = 3
-  separator = "-"
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  owners = ["099720109477"] # Canonical
 }
 
-resource "aws_s3_bucket" "demo" {
-  bucket = "${var.prefix}-${random_pet.petname.id}"
-  acl    = "public-read"
+resource "aws_instance" "ubuntu" {
+  ami                    = data.aws_ami.ubuntu.id
+  instance_type          = var.instance_type
+
   tags = {
-    Name        = "HashiCorp"
-    Environment = "Learn"
+    Name = var.instance_name
   }
-  policy = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "PublicReadGetObject",
-            "Effect": "Allow",
-            "Principal": "*",
-            "Action": [
-                "s3:GetObject"
-            ],
-            "Resource": [
-                "arn:aws:s3:::${var.prefix}-${random_pet.petname.id}/*"
-            ]
-        }
-    ]
-}
-EOF
-
-  website {
-    index_document = "index.html"
-    error_document = "error.html"
-
-  }
-  force_destroy = true
-}
-
-resource "aws_s3_bucket_object" "demo" {
-  acl          = "public-read"
-  key          = "index.html"
-  bucket       = aws_s3_bucket.demo.id
-  content      = file("${path.module}/assets/index.html")
-  content_type = "text/html"
-
 }
