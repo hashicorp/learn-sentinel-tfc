@@ -27,3 +27,10 @@ resource "aws_instance" "ubuntu" {
     Name = var.instance_name
   }
 }
+
+resource "aws_instance" "ubuntu" {
+  ami                    = data.aws_ami.ubuntu.id
+  instance_type          = var.instance_type
+  
+
+}
