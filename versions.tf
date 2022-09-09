@@ -19,5 +19,4 @@ terraform {
       name = "Terraform-Training"
     }
   }
-
 }
