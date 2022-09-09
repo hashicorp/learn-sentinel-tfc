@@ -6,17 +6,17 @@ terraform {
     }
     aws = {
       source  = "hashicorp/aws"
-      version = ">= 3.26.0"
+      version = "~> 4.16"
     }
   }
 
-  required_version = ">= 0.15"
+  required_version = ">= 1.2.0"
 
   backend "remote" {
-    organization = "<YOUR_TERRAFORM_ORG>"
+    organization = "Yogaya"
 
     workspaces {
-      name = "sentinel-example"
+      name = "Terraform-Training"
     }
   }
 
