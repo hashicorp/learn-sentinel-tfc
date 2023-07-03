@@ -29,6 +29,7 @@ resource "aws_instance" "ubuntu" {
     Name = var.instance_name
   }
   monitoring = true
+  ebs_optimized = true
 }
 
 
