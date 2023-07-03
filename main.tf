@@ -62,9 +62,7 @@ resource "aws_iam_role" "iam_role" {
     {
       "Effect": "Allow",
       "Principal": {
-#       "AWS": "*"
-        type        = "Service"
-        identifiers = ["ec2.amazonaws.com"]
+        "AWS": "*"
       },
       "Action": "sts:AssumeRole"
     }
@@ -72,8 +70,3 @@ resource "aws_iam_role" "iam_role" {
 }
 EOF
 }
-
-#principal {
-#      type        = "Service"
-#      identifiers = ["ec2.amazonaws.com"]
-#    }        
