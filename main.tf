@@ -21,16 +21,20 @@ data "aws_ami" "ubuntu" {
 }
 
 resource "aws_instance" "ubuntu" {
+  # Demo1
   ami                    = data.aws_ami.ubuntu.id
   instance_type          = var.instance_type
 
   tags = {
     Name = var.instance_name
   }
+  monitoring = true
+  ebs_optimized = true
 }
 
 
 resource "aws_security_group" "demo-sg" {
+  # Demo1
   name = "demo-sg"
   ingress {
     from_port   = 22
@@ -49,6 +53,7 @@ resource "aws_security_group" "demo-sg" {
 
 
 resource "aws_iam_role" "iam_role" {
+  # Demo1
   name               = var.iam_role_name
   assume_role_policy = <<EOF
 {
@@ -57,7 +62,9 @@ resource "aws_iam_role" "iam_role" {
     {
       "Effect": "Allow",
       "Principal": {
-        "AWS": "*"        
+#       "AWS": "*"
+        type        = "Service"
+        identifiers = ["ec2.amazonaws.com"]
       },
       "Action": "sts:AssumeRole"
     }
