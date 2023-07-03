@@ -12,3 +12,16 @@ variable "instance_name" {
   description = "EC2 instance name"
   default = "Provisioned by Terraform"
 }
+
+variable "iam_role_name" {
+  description = "EC2 IAM role name"
+  default = "permisive_iam_role"
+}
+
+variable "aws_access_key" {
+  description = "EC2 IAM user key"
+}
+
+variable "aws_secret_key" {
+  description = "EC2 IAM user secret"
+}
