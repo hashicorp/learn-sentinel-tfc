@@ -60,7 +60,9 @@ resource "aws_iam_role" "iam_role" {
     {
       "Effect": "Allow",
       "Principal": {
-        "AWS": "*"        
+#       "AWS": "*"
+        type        = "Service"
+        identifiers = ["ec2.amazonaws.com"]
       },
       "Action": "sts:AssumeRole"
     }
