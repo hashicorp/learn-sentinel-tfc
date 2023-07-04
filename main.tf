@@ -19,10 +19,53 @@ data "aws_ami" "ubuntu" {
 }
 
 resource "aws_instance" "ubuntu" {
+  # update-demo
   ami                    = data.aws_ami.ubuntu.id
   instance_type          = var.instance_type
 
   tags = {
     Name = var.instance_name
   }
+  ebs_optimized = true
+  monitoring = true
+}
+
+
+resource "aws_security_group" "demo-sg" {
+  # update-demo-2
+  name = "demo-sg"
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+
+resource "aws_iam_role" "iam_role" {
+  # update-demo-2
+  name               = var.iam_role_name
+  assume_role_policy = <<EOF
+{
+  "Version": "20230704-001",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        type        = "Service",
+        identifiers = ["ec2.amazonaws.com"]
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+EOF
 }
