@@ -17,3 +17,11 @@ variable "iam_role_name" {
   description = "EC2 IAM role name"
   default = "permisive_iam_role"
 }
+
+variable "aws_access_key" {
+  default = ""
+}
+
+variable "aws_secret_key" {
+  default = ""
+}
